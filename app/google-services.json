@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "85029855820",
+    "project_id": "financefox-a850d",
+    "storage_bucket": "financefox-a850d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:85029855820:android:d03c3d2a40c7c113880ae9",
+        "android_client_info": {
+          "package_name": "com.example.financefox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "85029855820-q85odtsnrrb1v7q3ja6s0a3ebmnb6odp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqNme4ccKE4k-dUG4pSe6qGmI46Xc5Aik"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "85029855820-q85odtsnrrb1v7q3ja6s0a3ebmnb6odp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
