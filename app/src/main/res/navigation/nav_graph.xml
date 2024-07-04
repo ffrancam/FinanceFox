@@ -20,4 +20,9 @@
         android:name="com.example.financefox.fragments.LogoutFragment"
         android:label="Log Out"
         tools:layout="@layout/fragment_logout" />
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.example.financefox.fragments.CategoryFragment"
+        android:label="Categories"
+        tools:layout="@layout/fragment_category" />
 </navigation>

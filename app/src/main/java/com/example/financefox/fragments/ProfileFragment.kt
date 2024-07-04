@@ -1,9 +1,8 @@
 package com.example.financefox.fragments
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,12 +12,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.core.view.ViewCompat
-import androidx.databinding.DataBindingUtil.setContentView
-import androidx.navigation.fragment.findNavController
-import com.firebase.ui.auth.AuthUI
+import androidx.activity.result.ActivityResultLauncher
 import com.example.financefox.R
-import com.firebase.ui.auth.data.model.User
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -26,12 +21,10 @@ import com.google.firebase.auth.UserProfileChangeRequest
 
 class ProfileFragment : Fragment() {
 
-    private lateinit var view: View
     private lateinit var profileImage: ImageView
     private lateinit var profileName: EditText
     private lateinit var profileEmail: EditText
     private lateinit var profilePwd: EditText
-    private lateinit var profilePdwConfirm: EditText
     private lateinit var updateButton: Button
 
     private lateinit var user: FirebaseUser
@@ -129,4 +122,6 @@ class ProfileFragment : Fragment() {
     private fun isValidEmail(email: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
+
+
 }
