@@ -38,4 +38,8 @@
             android:id="@+id/action_addTransactionFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/transactionFragment"
+        android:name="com.example.financefox.fragments.TransactionFragment"
+        android:label="Transactions" />
 </navigation>

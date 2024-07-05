@@ -9,6 +9,12 @@
         android:title="Home" />
 
     <item
+        android:id="@+id/transactionFragment"
+        android:icon="@drawable/log_icon"
+        android:checkable="true"
+        android:title="Transactions" />
+
+    <item
         android:id="@+id/categoryFragment"
         android:icon="@drawable/categories_icon"
         android:checkable="true"

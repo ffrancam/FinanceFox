@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.financefox.Category
+import com.example.financefox.CategoryAdapter
 import com.example.financefox.CategoryViewModel
 import com.example.financefox.R
 import com.example.financefox.databinding.FragmentCategoryBinding
@@ -17,7 +20,7 @@ class CategoryFragment : Fragment() {
     private lateinit var binding: FragmentCategoryBinding
 
     // Use of viewModel among fragments to share data
-    private val viewModel : CategoryViewModel by activityViewModels()
+    private val viewModel: CategoryViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,11 +34,19 @@ class CategoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.addCategoryBtn.setOnClickListener{
+        binding.addCategoryBtn.setOnClickListener {
             val name = binding.categoryName.text.toString()
 
             viewModel.addCategory(Category(name))
             binding.categoryName.setText("")
         }
+
+        // RV
+        binding.rvCategory.layoutManager = LinearLayoutManager(requireContext())
+        viewModel.categories.observe(viewLifecycleOwner, Observer { categories ->
+            // Update the RecyclerView
+            val gradeAdapter = CategoryAdapter(requireContext(), categories)
+            binding.rvCategory.adapter = gradeAdapter
+        })
     }
 }
