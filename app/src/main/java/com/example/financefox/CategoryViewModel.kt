@@ -52,27 +52,18 @@ class CategoryViewModel: ViewModel() {
             .collection("categories")
             .add(category)
             .addOnSuccessListener {
-                val currentCategories = _categories.value.orEmpty().toMutableList()
-                currentCategories.add(category)
-                _categories.value = currentCategories
-                Log.d("FinanceFox", "Category Added")
-            }
-        /*db.collection(firebaseAuth.currentUser!!.uid)
-            .document(category.name)
-            .set(category)
-            .addOnSuccessListener {
                 val categoriesList = _categories.value ?: mutableListOf()
                 // Check if the category already exists
                 val existingCategory = categoriesList.find{ it.name == category.name }
                 if (existingCategory != null) {
-                   Log.d("FinanceFox", "Category Already Exist")
+                    Log.d("FinanceFox", "Category Already Exist")
                 } else {
                     val currentCategories = _categories.value.orEmpty().toMutableList()
                     currentCategories.add(category)
                     _categories.value = currentCategories
                     Log.d("FinanceFox", "Category Added")
                 }
-            }*/
+            }
     }
 
     fun getCategory(index: Int): Category? {

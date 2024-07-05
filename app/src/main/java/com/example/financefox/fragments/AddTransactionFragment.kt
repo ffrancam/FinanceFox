@@ -80,7 +80,7 @@ class AddTransactionFragment : Fragment() {
             }
             // Assign date
             val date = selectedDate.time
-            transactionViewModel.addTransaction(Transaction(category, amountDouble, type, date))
+            transactionViewModel.addTransaction(category, amountDouble, type, date)
 
             // Get the NavController
             val navController = Navigation.findNavController(view)

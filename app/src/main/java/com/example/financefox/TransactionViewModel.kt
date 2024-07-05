@@ -9,7 +9,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Date
 
 
-data class Transaction(val category: Category? = null, val amount: Double = 0.0, val type: Boolean = false, val date: Date = Date()) {
+data class Transaction(var id:String = "",val category: Category? = null, val amount: Double = 0.0, val type: Boolean = false, val date: Date = Date()) {
     override fun toString(): String {
         return "Type:$type amount:$amount cat:$category date:$date"
     }
@@ -49,28 +49,27 @@ class TransactionViewModel: ViewModel() {
             }
     }
 
-    fun addTransaction(transaction: Transaction) {
+    fun addTransaction(category: Category?, amount: Double, type: Boolean, date: Date) {
+        val transaction = Transaction("", category, amount, type, date)
+        val transactionId = db.collection("users")
+            .document(firebaseAuth.currentUser!!.uid)
+            .collection("transactions").document().id // Genera un id univoco
+
+        transaction.id = transactionId // Assegna l'id alla transazione
+
         db.collection("users").document(firebaseAuth.currentUser!!.uid)
             .collection("transactions")
-            .add(transaction)
-            .addOnSuccessListener {
-                val currentTransactions = _transactions.value.orEmpty().toMutableList()
-                currentTransactions.add(transaction)
-                _transactions.value = currentTransactions
-                Log.d("FinanceFox", "Transaction Added")
-            }
-        /*
-        db.collection(firebaseAuth.currentUser!!.uid)
-            //.document(transaction.name)
-            .add(transaction)
+            .document(transactionId)
+            .set(transaction)
             .addOnSuccessListener {
                 val transactionsList = _transactions.value ?: mutableListOf()
                 val currentTransactions = _transactions.value.orEmpty().toMutableList()
                 currentTransactions.add(transaction)
                 _transactions.value = currentTransactions
-                Log.d("FinanceFox", "Category Added")
-            }*/
-
+                Log.d("FinanceFox", "Transaction Added")
+            }
     }
+
+
 
 }
