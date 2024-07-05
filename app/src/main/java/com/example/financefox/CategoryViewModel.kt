@@ -31,21 +31,33 @@ class CategoryViewModel: ViewModel() {
     }
 
     fun loadCategoriesFromFirestore() {
-        db.collection(firebaseAuth.currentUser!!.uid).get().addOnSuccessListener { documents ->
-            val categoryList = mutableListOf<Category>()
-            for (document in documents) {
-                val category = document.toObject(Category::class.java)
-                categoryList.add(category)
+        db.collection("users").document(firebaseAuth.currentUser!!.uid)
+            .collection("categories")
+            .get()
+            .addOnSuccessListener { documents ->
+                val categoryList = mutableListOf<Category>()
+                for (document in documents) {
+                    val category = document.toObject(Category::class.java)
+                    categoryList.add(category)
+                }
+                _categories.value = categoryList
             }
-            _categories.value = categoryList
-        }.addOnFailureListener {exception ->
-            // Handle failures
-            Log.d("FinanceFox","Collection empty or not available: $exception")
-        }
+            .addOnFailureListener { exception ->
+                Log.d("FinanceFox", "Collection empty or not available: $exception")
+            }
     }
 
     fun addCategory(category: Category) {
-        db.collection(firebaseAuth.currentUser!!.uid)
+        db.collection("users").document(firebaseAuth.currentUser!!.uid)
+            .collection("categories")
+            .add(category)
+            .addOnSuccessListener {
+                val currentCategories = _categories.value.orEmpty().toMutableList()
+                currentCategories.add(category)
+                _categories.value = currentCategories
+                Log.d("FinanceFox", "Category Added")
+            }
+        /*db.collection(firebaseAuth.currentUser!!.uid)
             .document(category.name)
             .set(category)
             .addOnSuccessListener {
@@ -60,7 +72,7 @@ class CategoryViewModel: ViewModel() {
                     _categories.value = currentCategories
                     Log.d("FinanceFox", "Category Added")
                 }
-            }
+            }*/
     }
 
     fun getCategory(index: Int): Category? {

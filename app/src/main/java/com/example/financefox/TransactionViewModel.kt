@@ -32,21 +32,34 @@ class TransactionViewModel: ViewModel() {
         userID = firebaseAuth.currentUser!!.email.toString()
     }
 
-    private fun loadTransactionsFromFirestore() {
-        db.collection(firebaseAuth.currentUser!!.uid).get().addOnSuccessListener { documents ->
-            val transactionList = mutableListOf<Transaction>()
-            for (document in documents) {
-                val transaction = document.toObject(Transaction::class.java)
-                transactionList.add(transaction)
+    fun loadTransactionsFromFirestore() {
+        db.collection("users").document(firebaseAuth.currentUser!!.uid)
+            .collection("transactions")
+            .get()
+            .addOnSuccessListener { documents ->
+                val transactionList = mutableListOf<Transaction>()
+                for (document in documents) {
+                    val transaction = document.toObject(Transaction::class.java)
+                    transactionList.add(transaction)
+                }
+                _transactions.value = transactionList
             }
-            _transactions.value = transactionList
-        }.addOnFailureListener {exception ->
-            // Handle failures
-            Log.d("FinanceFox","Collection empty or not available: $exception")
-        }
+            .addOnFailureListener { exception ->
+                Log.d("FinanceFox", "Collection empty or not available: $exception")
+            }
     }
 
     fun addTransaction(transaction: Transaction) {
+        db.collection("users").document(firebaseAuth.currentUser!!.uid)
+            .collection("transactions")
+            .add(transaction)
+            .addOnSuccessListener {
+                val currentTransactions = _transactions.value.orEmpty().toMutableList()
+                currentTransactions.add(transaction)
+                _transactions.value = currentTransactions
+                Log.d("FinanceFox", "Transaction Added")
+            }
+        /*
         db.collection(firebaseAuth.currentUser!!.uid)
             //.document(transaction.name)
             .add(transaction)
@@ -56,22 +69,8 @@ class TransactionViewModel: ViewModel() {
                 currentTransactions.add(transaction)
                 _transactions.value = currentTransactions
                 Log.d("FinanceFox", "Category Added")
-            }
+            }*/
 
     }
 
 }
-
-/*
-    fun getCategory(index: Int): Category? {
-        return _categories.value?.get(index)
-    }
-
-    fun getCategoryList(): List<String> {
-        val result = mutableListOf<String>()
-        _categories.value?.forEach{
-            result += it.name
-        }
-        return result.toList()
-    }
-}*/
