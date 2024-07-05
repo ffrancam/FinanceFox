@@ -3,14 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.LogoutFragment">
+    tools:context=".fragments.AddCategoryFragment">
 
+    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="You are currrently logging out..."
-        android:textSize="15sp"
-        android:textColor="@color/grey"
-        android:gravity="center"/>
+        android:text="@string/hello_blank_fragment" />
 
 </FrameLayout>

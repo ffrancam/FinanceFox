@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "85029855820",
-    "project_id": "financefox-a850d",
-    "storage_bucket": "financefox-a850d.appspot.com"
+    "project_number": "357855577213",
+    "project_id": "financefox-9f389",
+    "storage_bucket": "financefox-9f389.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:85029855820:android:d03c3d2a40c7c113880ae9",
+        "mobilesdk_app_id": "1:357855577213:android:834a13d1c70966904f9d14",
         "android_client_info": {
           "package_name": "com.example.financefox"
         }
       },
       "oauth_client": [
         {
-          "client_id": "85029855820-q85odtsnrrb1v7q3ja6s0a3ebmnb6odp.apps.googleusercontent.com",
+          "client_id": "357855577213-k8pntvkgrket7fmqojt0d7ee36fgp0u1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBqNme4ccKE4k-dUG4pSe6qGmI46Xc5Aik"
+          "current_key": "AIzaSyDAYpuSgZeqzELKivYSG9D72MnQEqM2IMA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "85029855820-q85odtsnrrb1v7q3ja6s0a3ebmnb6odp.apps.googleusercontent.com",
+              "client_id": "357855577213-k8pntvkgrket7fmqojt0d7ee36fgp0u1.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -57,6 +57,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
     // firebase
     implementation(platform("com.google.firebase:firebase-bom:33.1.1"))
+    implementation ("com.google.firebase:firebase-firestore:24.0.1'")
     //for authentication
     implementation("com.firebaseui:firebase-ui-auth:7.2.0")
     //if you target Android 12
