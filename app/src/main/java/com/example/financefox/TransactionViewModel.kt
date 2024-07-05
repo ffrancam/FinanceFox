@@ -53,9 +53,9 @@ class TransactionViewModel: ViewModel() {
         val transaction = Transaction("", category, amount, type, date)
         val transactionId = db.collection("users")
             .document(firebaseAuth.currentUser!!.uid)
-            .collection("transactions").document().id // Genera un id univoco
+            .collection("transactions").document().id
 
-        transaction.id = transactionId // Assegna l'id alla transazione
+        transaction.id = transactionId
 
         db.collection("users").document(firebaseAuth.currentUser!!.uid)
             .collection("transactions")
@@ -70,6 +70,25 @@ class TransactionViewModel: ViewModel() {
             }
     }
 
+    fun deleteTransaction(transaction: Transaction) {
+        val userId = firebaseAuth.currentUser?.uid
+        val transactionId = transaction.id
+        val documentPath = "users/$userId/transactions/$transactionId"
 
+        Log.d("FinanceFox", "Attempting to delete transaction at path: $documentPath")
+
+        // Delete transaction from Firestore
+        db.collection("users").document(firebaseAuth.currentUser!!.uid)
+            .collection("transactions")
+            .document(transaction.id)
+            .delete()
+            .addOnSuccessListener {
+                Log.d("FinanceFox", "Transaction successfully deleted: ${transaction.id}")
+            }
+            .addOnFailureListener { exception ->
+                Log.d("FinanceFox", "Failed to delete transaction: $exception")
+                // Handle failure as needed
+            }
+    }
 
 }

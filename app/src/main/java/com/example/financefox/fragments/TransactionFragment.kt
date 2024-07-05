@@ -42,7 +42,7 @@ class TransactionFragment : Fragment() {
         binding.rvTransaction.layoutManager = LinearLayoutManager(requireContext())
         viewModel.transactions.observe(viewLifecycleOwner, Observer { transactions ->
             // Update the RecyclerView
-            val transactionAdapter = TransactionAdapter(requireContext(), transactions)
+            val transactionAdapter = TransactionAdapter(requireContext(), transactions, viewModel)
             binding.rvTransaction.adapter = transactionAdapter
         })
 
@@ -52,4 +52,6 @@ class TransactionFragment : Fragment() {
             navController.navigate(R.id.action_transactionFragment_to_addTransactionFragment)
         }
     }
+
+
 }
