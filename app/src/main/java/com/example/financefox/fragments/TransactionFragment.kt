@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.financefox.R
 import com.example.financefox.TransactionAdapter
@@ -44,5 +45,11 @@ class TransactionFragment : Fragment() {
             val transactionAdapter = TransactionAdapter(requireContext(), transactions)
             binding.rvTransaction.adapter = transactionAdapter
         })
+
+        // Get the NavController
+        val navController = Navigation.findNavController(view)
+        binding.callAddTransactionBtn.setOnClickListener{
+            navController.navigate(R.id.action_transactionFragment_to_addTransactionFragment)
+        }
     }
 }

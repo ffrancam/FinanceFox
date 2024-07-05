@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.Navigation
 import com.example.financefox.CategoryViewModel
 import com.example.financefox.Transaction
 import com.example.financefox.TransactionViewModel
@@ -80,6 +81,12 @@ class AddTransactionFragment : Fragment() {
             // Assign date
             val date = selectedDate.time
             transactionViewModel.addTransaction(Transaction(category, amountDouble, type, date))
+
+            // Get the NavController
+            val navController = Navigation.findNavController(view)
+            binding.addTransactionBtn.setOnClickListener{
+                navController.navigate(R.id.action_addTransactionFragment_to_homeFragment)
+            }
         }
     }
 

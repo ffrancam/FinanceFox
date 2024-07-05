@@ -41,5 +41,9 @@
     <fragment
         android:id="@+id/transactionFragment"
         android:name="com.example.financefox.fragments.TransactionFragment"
-        android:label="Transactions" />
+        android:label="Transactions" >
+        <action
+            android:id="@+id/action_transactionFragment_to_addTransactionFragment"
+            app:destination="@id/addTransactionFragment" />
+    </fragment>
 </navigation>
