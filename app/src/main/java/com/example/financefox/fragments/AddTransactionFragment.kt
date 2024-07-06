@@ -65,7 +65,7 @@ class AddTransactionFragment : Fragment() {
 
         binding.addTransactionBtn.setOnClickListener{
 
-            val categoryName = binding.transactionCategory.selectedItem as String
+            var categoryName = binding.transactionCategory.selectedItem as String
             val amount = binding.transactionAmount.text.toString()
             val selectedRadioButton =
                 view.findViewById<RadioButton>(binding.transactionType.checkedRadioButtonId)
@@ -74,10 +74,8 @@ class AddTransactionFragment : Fragment() {
                 Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show()
             } else {
                 // Assign Category
-                val category = if (categoryName == "--") {
-                    null
-                } else {
-                    categoryViewModel.getCategoryByName(categoryName)
+                if (categoryName == "--") {
+                    categoryName = "none"
                 }
                 // Convert amount to double
                 val amountDouble = if (amount.isNotEmpty()) {
@@ -93,7 +91,9 @@ class AddTransactionFragment : Fragment() {
                 }
                 // Assign date
                 val date = selectedDate.time
-                transactionViewModel.addTransaction(category, amountDouble, type, date)
+                transactionViewModel.addTransaction(categoryName, amountDouble, type, date)
+
+                Toast.makeText(requireContext(), "Transaction Successfully Added", Toast.LENGTH_SHORT).show()
 
                 // Get the NavController
                 val navController = Navigation.findNavController(view)

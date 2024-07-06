@@ -9,7 +9,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Date
 
 
-data class Transaction(var id:String = "", var category: Category? = null, val amount: Double = 0.0, val type: Boolean = false, val date: Date = Date()) {
+data class Transaction(var id:String = "", var category: String = "", val amount: Double = 0.0, val type: Boolean = false, val date: Date = Date()) {
     override fun toString(): String {
         return "Type:$type amount:$amount cat:$category date:$date"
     }
@@ -49,7 +49,7 @@ class TransactionViewModel: ViewModel() {
             }
     }
 
-    fun addTransaction(category: Category?, amount: Double, type: Boolean, date: Date) {
+    fun addTransaction(category: String, amount: Double, type: Boolean, date: Date) {
         val transaction = Transaction("", category, amount, type, date)
         val transactionId = db.collection("users")
             .document(firebaseAuth.currentUser!!.uid)
@@ -97,8 +97,8 @@ class TransactionViewModel: ViewModel() {
     fun updateTransactionsAfterCategoryDelete(categoryName: String) {
         val currentTransactions = _transactions.value ?: mutableListOf()
         currentTransactions.forEach { transaction ->
-            if (transaction.category?.name == categoryName) {
-                transaction.category = null
+            if (transaction.category == categoryName) {
+                transaction.category = "none"
 
                 val transactionRef = db.collection("users")
                     .document(firebaseAuth.currentUser!!.uid)
@@ -106,7 +106,7 @@ class TransactionViewModel: ViewModel() {
                     .document(transaction.id)
 
                 transactionRef
-                    .update("category", null)
+                    .update("category", "none")
                     .addOnSuccessListener {
                         Log.d("CategoryViewModel", "Transaction category updated to null in Firestore")
                     }
@@ -118,11 +118,11 @@ class TransactionViewModel: ViewModel() {
         _transactions.postValue(currentTransactions)
     }
 
-    fun updateTransactionAfterCategoryEdit(categoryName: String, updatedCategory: Category) {
+    fun updateTransactionAfterCategoryEdit(categoryName: String, newName: String) {
         val currentTransactions = _transactions.value ?: mutableListOf()
         currentTransactions.forEach { transaction ->
-            if (transaction.category?.name == categoryName) {
-                transaction.category = updatedCategory
+            if (transaction.category == categoryName) {
+                transaction.category = newName
 
                 val transactionRef = db.collection("users")
                     .document(firebaseAuth.currentUser!!.uid)
@@ -130,7 +130,7 @@ class TransactionViewModel: ViewModel() {
                     .document(transaction.id)
 
                 transactionRef
-                    .update("category", updatedCategory)
+                    .update("category", newName)
                     .addOnSuccessListener {
                         Log.d("CategoryViewModel", "Transaction category updated to null in Firestore")
                     }

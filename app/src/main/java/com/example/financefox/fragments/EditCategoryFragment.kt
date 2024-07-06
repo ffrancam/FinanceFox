@@ -63,9 +63,16 @@ class EditCategoryFragment : Fragment() {
                 Toast.makeText(requireContext(), "Category Already Exits", Toast.LENGTH_SHORT).show()
             }
             else {
-                categoryViewModel.updateCategory(categoryViewModel.getCategoryByName(categoryToEdit), newName)
-                binding.newCategoryName.setText("")
-                Toast.makeText(requireContext(), "Category Successfully Added", Toast.LENGTH_SHORT).show()
+                val category = categoryViewModel.getCategoryByName(categoryToEdit)
+
+                categoryViewModel.updateCategory(category, newName)
+                categoryViewModel.categories.observe(viewLifecycleOwner) { updatedCategories ->
+                    val updatedCategory = updatedCategories.find { it.id == category!!.id }
+                    if (updatedCategory != null) {
+                        transactionViewModel.updateTransactionAfterCategoryEdit(categoryToEdit, newName)
+                    }
+                }
+                Toast.makeText(requireContext(), "Category Successfully Updated", Toast.LENGTH_SHORT).show()
             }
 
             // Get the NavController
