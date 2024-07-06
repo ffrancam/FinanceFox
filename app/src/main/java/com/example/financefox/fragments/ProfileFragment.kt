@@ -13,7 +13,10 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import androidx.fragment.app.activityViewModels
+import com.example.financefox.BalanceViewModel
 import com.example.financefox.R
+import com.example.financefox.databinding.FragmentProfileBinding
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -21,12 +24,8 @@ import com.google.firebase.auth.UserProfileChangeRequest
 
 class ProfileFragment : Fragment() {
 
-    private lateinit var profileImage: ImageView
-    private lateinit var profileName: EditText
-    private lateinit var profileEmail: EditText
-    private lateinit var profilePwd: EditText
-    private lateinit var updateButton: Button
-
+    //binding connected to the specific layout of the fragment
+    private lateinit var binding: FragmentProfileBinding
     private lateinit var user: FirebaseUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,33 +37,28 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        // Inflate the layout using data binding
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        profileImage = view.findViewById(R.id.profile_img)
-        profileName = view.findViewById(R.id.profile_name)
-        profileEmail = view.findViewById(R.id.profile_email)
-        profilePwd = view.findViewById(R.id.profile_pwd)
-        updateButton = view.findViewById(R.id.edit_profile_btn)
-
         // Set Texts
-        profileName.setText(user.displayName ?: "")
-        profileEmail.setText(user.email ?: "")
+        binding.profileName.setText(user.displayName ?: "")
+        binding.profileEmail.setText(user.email ?: "")
 
-        updateButton.setOnClickListener {
+        binding.editProfileBtn.setOnClickListener {
             updateProfile(view)
         }
     }
 
     private fun updateProfile(view: View?) {
         // updated variables
-        val newName = profileName.text.toString().trim()
-        val newEmail = profileEmail.text.toString().trim()
-        val pwd = profilePwd.text.toString().trim()
+        val newName = binding.profileName.text.toString().trim()
+        val newEmail = binding.profileEmail.text.toString().trim()
+        val pwd = binding.profilePwd.text.toString().trim()
 
         // Check if there is an empty field
         if (newName.isEmpty() || newEmail.isEmpty() || pwd.isEmpty()) {
@@ -94,7 +88,7 @@ class ProfileFragment : Fragment() {
                             .addOnCompleteListener { updateTask ->
                                 if (updateTask.isSuccessful) {
                                     Toast.makeText(requireContext(), "Profile Updated Successfully", Toast.LENGTH_SHORT).show()
-                                    profilePwd.setText("")
+                                    binding.profilePwd.setText("")
                                 } else {
                                     Toast.makeText(requireContext(), "An error occurred while updating profile", Toast.LENGTH_SHORT).show()
                                 }
@@ -107,7 +101,7 @@ class ProfileFragment : Fragment() {
                             .addOnCompleteListener { emailTask ->
                                 if (emailTask.isSuccessful) {
                                     Toast.makeText(requireContext(), "Email Updated Successfully", Toast.LENGTH_SHORT).show()
-                                    profilePwd.setText("")
+                                    binding.profilePwd.setText("")
                                 } else {
                                     Toast.makeText(requireContext(), "An error occurred while updating email", Toast.LENGTH_SHORT).show()
                                 }
