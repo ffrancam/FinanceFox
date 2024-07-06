@@ -54,7 +54,7 @@ class CategoryFragment : Fragment() {
         binding.rvCategory.layoutManager = LinearLayoutManager(requireContext())
         viewModel.categories.observe(viewLifecycleOwner, Observer { categories ->
             // Update the RecyclerView
-            val categoryAdapter = CategoryAdapter(requireContext(), categories)
+            val categoryAdapter = CategoryAdapter(requireContext(), categories, viewModel)
             binding.rvCategory.adapter = categoryAdapter
         })
     }

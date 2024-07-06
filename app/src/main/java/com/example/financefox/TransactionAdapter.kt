@@ -17,10 +17,6 @@ class TransactionAdapter(var mContext: Context, var transactionList: List<Transa
 
     inner class TransactionHolder(val view: ItemTransactionBinding) : RecyclerView.ViewHolder(view.root)
 
-    private var firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionHolder {
         val binding = ItemTransactionBinding.inflate(LayoutInflater.from(mContext), parent, false)
         return TransactionHolder(binding)
@@ -53,38 +49,6 @@ class TransactionAdapter(var mContext: Context, var transactionList: List<Transa
                 removeAt(position)
             }
             notifyDataSetChanged()
-
-
-
-            /*val userId = firebaseAuth.currentUser?.uid
-            val transactionId = transaction.id
-            val documentPath = "user/$userId/transactions/$transactionId"
-
-            Log.d("FinanceFox", "Attempting to delete transaction at path: $documentPath")
-
-            // Check if userId or transactionId is null or empty
-            if (userId.isNullOrEmpty() || transactionId.isNullOrEmpty()) {
-                Log.d("FinanceFox", "User ID or Transaction ID is null or empty.")
-                return@setOnClickListener
-            }
-
-            // Delete transaction from Firestore
-            db.collection("user").document(firebaseAuth.currentUser!!.uid)
-                .collection("transactions")
-                .document(transaction.id)
-                .delete()
-                .addOnSuccessListener {
-                    Log.d("FinanceFox", "Transaction successfully deleted: ${transaction.id}")
-                    // Remove item from RecyclerView
-                    transactionList = transactionList.toMutableList().apply {
-                        removeAt(position)
-                    }
-                    notifyDataSetChanged()
-                }
-                .addOnFailureListener { exception ->
-                    Log.d("FinanceFox", "Failed to delete transaction: $exception")
-                    // Handle failure as needed
-                }*/
         }
     }
 }

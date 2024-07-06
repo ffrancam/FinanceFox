@@ -48,9 +48,12 @@ class CategoryViewModel: ViewModel() {
     }
 
     fun addCategory(category: Category) {
+        val name = category.name
+
         db.collection("users").document(firebaseAuth.currentUser!!.uid)
             .collection("categories")
-            .add(category)
+            .document(name)
+            .set(category)
             .addOnSuccessListener {
                 val categoriesList = _categories.value ?: mutableListOf()
                 // Check if the category already exists
@@ -81,5 +84,23 @@ class CategoryViewModel: ViewModel() {
             result += it.name
         }
         return result.toList()
+    }
+
+    fun deleteCategory(category: Category) {
+        db.collection("users").document(firebaseAuth.currentUser!!.uid)
+            .collection("categories")
+            .document(category.name) // Assicurati che category.name sia l'ID del documento nel Firestore
+            .delete()
+            .addOnSuccessListener {
+                val currentCategories = _categories.value ?: mutableListOf()
+                currentCategories.remove(category)
+                _categories.postValue(currentCategories)
+                Log.d("FinanceFox", "Category successfully deleted: ${category.name}")
+                //_categories.value = updatedCategories
+            }
+            .addOnFailureListener { exception ->
+                Log.d("FinanceFox", "Failed to delete category: $exception")
+                // Handle failure as needed
+            }
     }
 }

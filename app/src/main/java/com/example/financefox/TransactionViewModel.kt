@@ -71,11 +71,11 @@ class TransactionViewModel: ViewModel() {
     }
 
     fun deleteTransaction(transaction: Transaction) {
-        val userId = firebaseAuth.currentUser?.uid
+        /*val userId = firebaseAuth.currentUser?.uid
         val transactionId = transaction.id
         val documentPath = "users/$userId/transactions/$transactionId"
 
-        Log.d("FinanceFox", "Attempting to delete transaction at path: $documentPath")
+        Log.d("FinanceFox", "Attempting to delete transaction at path: $documentPath")*/
 
         // Delete transaction from Firestore
         db.collection("users").document(firebaseAuth.currentUser!!.uid)
@@ -83,6 +83,9 @@ class TransactionViewModel: ViewModel() {
             .document(transaction.id)
             .delete()
             .addOnSuccessListener {
+                val currentTransactions = _transactions.value ?: mutableListOf()
+                currentTransactions.remove(transaction)
+                _transactions.postValue(currentTransactions)
                 Log.d("FinanceFox", "Transaction successfully deleted: ${transaction.id}")
             }
             .addOnFailureListener { exception ->
