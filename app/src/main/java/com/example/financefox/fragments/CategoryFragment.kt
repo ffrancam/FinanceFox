@@ -13,6 +13,7 @@ import com.example.financefox.Category
 import com.example.financefox.CategoryAdapter
 import com.example.financefox.CategoryViewModel
 import com.example.financefox.R
+import com.example.financefox.TransactionViewModel
 import com.example.financefox.databinding.FragmentCategoryBinding
 
 class CategoryFragment : Fragment() {
@@ -22,7 +23,7 @@ class CategoryFragment : Fragment() {
 
     // Use of viewModel among fragments to share data
     private val viewModel: CategoryViewModel by activityViewModels()
-
+    private val transactionViewModel: TransactionViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,7 +55,7 @@ class CategoryFragment : Fragment() {
         binding.rvCategory.layoutManager = LinearLayoutManager(requireContext())
         viewModel.categories.observe(viewLifecycleOwner, Observer { categories ->
             // Update the RecyclerView
-            val categoryAdapter = CategoryAdapter(requireContext(), categories, viewModel)
+            val categoryAdapter = CategoryAdapter(requireContext(), categories, viewModel, transactionViewModel)
             binding.rvCategory.adapter = categoryAdapter
         })
     }

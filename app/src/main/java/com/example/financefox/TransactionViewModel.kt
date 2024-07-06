@@ -9,7 +9,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Date
 
 
-data class Transaction(var id:String = "",val category: Category? = null, val amount: Double = 0.0, val type: Boolean = false, val date: Date = Date()) {
+data class Transaction(var id:String = "",var category: Category? = null, val amount: Double = 0.0, val type: Boolean = false, val date: Date = Date()) {
     override fun toString(): String {
         return "Type:$type amount:$amount cat:$category date:$date"
     }
@@ -92,6 +92,30 @@ class TransactionViewModel: ViewModel() {
                 Log.d("FinanceFox", "Failed to delete transaction: $exception")
                 // Handle failure as needed
             }
+    }
+
+    fun updateTransactionsAfterCategoryDelete(categoryName: String) {
+        val currentTransactions = _transactions.value ?: mutableListOf()
+        currentTransactions.forEach { transaction ->
+            if (transaction.category?.name == categoryName) {
+                transaction.category = null
+
+                val transactionRef = db.collection("users")
+                    .document(firebaseAuth.currentUser!!.uid)
+                    .collection("transactions")
+                    .document(transaction.id)
+
+                transactionRef
+                    .update("category", null)
+                    .addOnSuccessListener {
+                        Log.d("CategoryViewModel", "Transaction category updated to null in Firestore")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("CategoryViewModel", "Error updating transaction category in Firestore", e)
+                    }
+            }
+        }
+        _transactions.postValue(currentTransactions)
     }
 
 }

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.financefox.databinding.ItemCategoryBinding
 
 
-class CategoryAdapter(var mContext: Context, var categoryList: List<Category>, val categoryViewModel: CategoryViewModel) : RecyclerView.Adapter<CategoryAdapter.CategoryHolder>() {
+class CategoryAdapter(var mContext: Context, var categoryList: List<Category>, val categoryViewModel: CategoryViewModel, val transactionViewModel: TransactionViewModel) : RecyclerView.Adapter<CategoryAdapter.CategoryHolder>() {
 
     inner class CategoryHolder(val view: ItemCategoryBinding) : RecyclerView.ViewHolder(view.root)
 
@@ -22,11 +22,13 @@ class CategoryAdapter(var mContext: Context, var categoryList: List<Category>, v
 
     override fun onBindViewHolder(holder: CategoryHolder, position: Int) {
         val category = categoryList.get(position)
+        val categoryName = category.name
         val view = holder.view
         view.categoryItem.text = category.name
 
         // Set onClickListener for delete button
         view.deleteCategory.setOnClickListener {
+            transactionViewModel.updateTransactionsAfterCategoryDelete(categoryName)
             categoryViewModel.deleteCategory(category)
             // Remove item from RecyclerView
             categoryList = categoryList.toMutableList().apply {
