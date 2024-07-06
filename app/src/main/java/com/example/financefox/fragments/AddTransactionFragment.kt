@@ -15,6 +15,7 @@ import androidx.navigation.Navigation
 import com.example.financefox.CategoryViewModel
 import com.example.financefox.Transaction
 import com.example.financefox.TransactionViewModel
+import com.example.financefox.BalanceViewModel
 import com.example.financefox.R
 import com.example.financefox.databinding.FragmentAddTransactionBinding
 import com.example.financefox.databinding.FragmentCategoryBinding
@@ -32,6 +33,7 @@ class AddTransactionFragment : Fragment() {
     // Use of viewModel among fragments to share data
     private val transactionViewModel : TransactionViewModel by activityViewModels()
     private val categoryViewModel : CategoryViewModel by activityViewModels()
+    private val balanceViewModel : BalanceViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -91,13 +93,16 @@ class AddTransactionFragment : Fragment() {
                 }
                 // Assign date
                 val date = selectedDate.time
+
+                // Add transaction
                 transactionViewModel.addTransaction(categoryName, amountDouble, type, date)
+                balanceViewModel.updateBalance(amountDouble, type, false)
 
                 Toast.makeText(requireContext(), "Transaction Successfully Added", Toast.LENGTH_SHORT).show()
 
                 // Get the NavController
                 val navController = Navigation.findNavController(view)
-                navController.navigate(R.id.action_addTransactionFragment_to_transactionFragment)
+                navController.navigate(R.id.action_addTransactionFragment_to_homeFragment)
             }
         }
     }

@@ -39,8 +39,8 @@
         android:label="Add Transaction"
         tools:layout="@layout/fragment_add_transaction" >
         <action
-            android:id="@+id/action_addTransactionFragment_to_transactionFragment"
-            app:destination="@id/transactionFragment" />
+            android:id="@+id/action_addTransactionFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/transactionFragment"

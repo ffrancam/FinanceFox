@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 
-class TransactionAdapter(var mContext: Context, var transactionList: List<Transaction>, val transactionViewModel: TransactionViewModel) : RecyclerView.Adapter<TransactionAdapter.TransactionHolder>() {
+class TransactionAdapter(var mContext: Context, var transactionList: List<Transaction>, val transactionViewModel: TransactionViewModel, val balanceViewModel: BalanceViewModel) : RecyclerView.Adapter<TransactionAdapter.TransactionHolder>() {
 
     inner class TransactionHolder(val view: ItemTransactionBinding) : RecyclerView.ViewHolder(view.root)
 
@@ -42,9 +42,9 @@ class TransactionAdapter(var mContext: Context, var transactionList: List<Transa
 
         // Set onClickListener for delete button
         view.deleteTransaction.setOnClickListener {
+            balanceViewModel.updateBalance(transaction.amount, transaction.type, true)
             transactionViewModel.deleteTransaction(transaction)
             // Remove item from RecyclerView
-
             transactionList = transactionList.toMutableList().apply {
                 removeAt(position)
             }

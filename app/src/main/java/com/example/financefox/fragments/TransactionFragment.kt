@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.financefox.BalanceViewModel
 import com.example.financefox.R
 import com.example.financefox.TransactionAdapter
 import com.example.financefox.TransactionViewModel
@@ -22,6 +23,8 @@ class TransactionFragment : Fragment() {
 
     // Use of viewModel among fragments to share data
     private val viewModel: TransactionViewModel by activityViewModels()
+    private val balanceViewModel : BalanceViewModel by activityViewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -42,7 +45,7 @@ class TransactionFragment : Fragment() {
         binding.rvTransaction.layoutManager = LinearLayoutManager(requireContext())
         viewModel.transactions.observe(viewLifecycleOwner, Observer { transactions ->
             // Update the RecyclerView
-            val transactionAdapter = TransactionAdapter(requireContext(), transactions, viewModel)
+            val transactionAdapter = TransactionAdapter(requireContext(), transactions, viewModel, balanceViewModel)
             binding.rvTransaction.adapter = transactionAdapter
         })
 

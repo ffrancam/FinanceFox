@@ -31,7 +31,9 @@ class BalanceViewModel: ViewModel() {
     }
 
     fun loadBalanceFromFirestore() {
-        val balanceRef = db.collection("users").document(firebaseAuth.currentUser!!.uid).collection("balance").document("balanceDoc")
+        val balanceRef = db.collection("users").document(firebaseAuth.currentUser!!.uid)
+            .collection("balance")
+            .document("balanceDoc")
 
         balanceRef.get()
             .addOnSuccessListener { document ->
@@ -56,7 +58,51 @@ class BalanceViewModel: ViewModel() {
             }
     }
 
-    fun addBalance(amountToAdd: Double) {
+    // actionType -> true = deleteTransaction
+    //            -> false = addTransaction
+    fun updateBalance(transactionAmount: Double, transactionType: Boolean, actionType: Boolean) {
+        val balanceRef = db.collection("users")
+            .document(firebaseAuth.currentUser!!.uid)
+            .collection("balance")
+            .document("balanceDoc")
+
+        val currentBalance = _balance.value?.amount ?: 0.0
+        var newBalance = 0.0
+
+        if(actionType) {
+            // Transaction Deleted
+            newBalance = if(transactionType) {
+                // Expense
+                currentBalance + transactionAmount
+            } else {
+                // Entry
+                currentBalance - transactionAmount
+            }
+        } else {
+            // Transaction Added
+            newBalance = if(transactionType) {
+                // Expense
+                currentBalance - transactionAmount
+            } else {
+                // Entry
+                currentBalance + transactionAmount
+            }
+        }
+
+        balanceRef
+            .update("amount", newBalance)
+            .addOnSuccessListener {
+                _balance.value = Balance(newBalance)
+                Log.d("BalanceViewModel", "Balance updated to $newBalance in Firestore")
+            }
+            .addOnFailureListener { e ->
+                Log.w("BalanceViewModel", "Error updating balance in Firestore", e)
+            }
+    }
+
+
+
+    /*fun addBalance(amountToAdd: Double) {
         val currentBalance = _balance.value?.amount ?: 0.0
         val newBalance = currentBalance + amountToAdd
 
@@ -72,108 +118,5 @@ class BalanceViewModel: ViewModel() {
             .addOnFailureListener { e ->
                 Log.w("BalanceViewModel", "Error adding to balance in Firestore", e)
             }
-    }
+    }*/
 }
-
-/*
-class CategoryViewModel: ViewModel() {
-
-fun loadCategoriesFromFirestore() {
-        db.collection("users").document(firebaseAuth.currentUser!!.uid)
-            .collection("categories")
-            .get()
-            .addOnSuccessListener { documents ->
-                val categoryList = mutableListOf<Category>()
-                for (document in documents) {
-                    val category = document.toObject(Category::class.java)
-                    categoryList.add(category)
-                }
-                _categories.value = categoryList
-            }
-            .addOnFailureListener { exception ->
-                Log.d("FinanceFox", "Collection empty or not available: $exception")
-            }
-    }
-
-    fun addCategory(categoryName: String) {
-        val category = Category("", categoryName)
-        val categoryId = db.collection("users")
-            .document(firebaseAuth.currentUser!!.uid)
-            .collection("categories").document().id
-
-        category.id = categoryId
-
-        db.collection("users").document(firebaseAuth.currentUser!!.uid)
-            .collection("categories")
-            .document(categoryId)
-            .set(category)
-            .addOnSuccessListener {
-                val categoriesList = _categories.value ?: mutableListOf()
-                // Check if the category already exists
-                val existingCategory = categoriesList.find{ it.name == category.name }
-                if (existingCategory != null) {
-                    Log.d("FinanceFox", "Category Already Exist")
-                } else {
-                    val currentCategories = _categories.value.orEmpty().toMutableList()
-                    currentCategories.add(category)
-                    _categories.value = currentCategories
-                    Log.d("FinanceFox", "Category Added")
-                }
-            }
-    }
-
-    fun getCategory(index: Int): Category? {
-        return _categories.value?.get(index)
-    }
-
-    fun getCategoryByName(categoryName: String): Category? {
-        val categoriesList = _categories.value ?:  throw NoSuchElementException("Category not found")
-        return categoriesList.find { it.name == categoryName }
-    }
-
-    fun getCategoryList(): List<String> {
-        val result = mutableListOf<String>()
-        _categories.value?.forEach{
-            result += it.name
-        }
-        return result.toList()
-    }
-
-    fun deleteCategory(category: Category) {
-        db.collection("users").document(firebaseAuth.currentUser!!.uid)
-            .collection("categories")
-            .document(category.id)
-            .delete()
-            .addOnSuccessListener {
-                val currentCategories = _categories.value ?: mutableListOf()
-                currentCategories.remove(category)
-                _categories.postValue(currentCategories)
-                Log.d("FinanceFox", "Category successfully deleted: ${category.name}")
-                //_categories.value = updatedCategories
-            }
-            .addOnFailureListener { exception ->
-                Log.d("FinanceFox", "Failed to delete category: $exception")
-            }
-    }
-
-    fun updateCategory(category: Category?, newCategoryName: String) {
-        val categoryRef = db.collection("users")
-            .document(firebaseAuth.currentUser!!.uid)
-            .collection("categories")
-            .document(category!!.id)
-        categoryRef
-            .update("name", newCategoryName)
-            .addOnSuccessListener {
-                val currentCategories = _categories.value?.toMutableList() ?: mutableListOf()
-                val index = currentCategories.indexOfFirst { it.id == category.id }
-                if (index != -1) {
-                    currentCategories[index].name = newCategoryName
-                    _categories.postValue(currentCategories)
-                }
-                Log.d("CategoryViewModel", "Category name updated to null in Firestore")
-            }
-            .addOnFailureListener { e ->
-                Log.w("CategoryViewModel", "Error updating Category name category in Firestore", e)
-            }
-    }
-}*/
