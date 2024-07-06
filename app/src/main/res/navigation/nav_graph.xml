@@ -28,7 +28,11 @@
         android:id="@+id/categoryFragment"
         android:name="com.example.financefox.fragments.CategoryFragment"
         android:label="Categories"
-        tools:layout="@layout/fragment_category" />
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_categoryFragment_to_editCategoryFragment"
+            app:destination="@id/editCategoryFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addTransactionFragment"
         android:name="com.example.financefox.fragments.AddTransactionFragment"
@@ -45,5 +49,14 @@
         <action
             android:id="@+id/action_transactionFragment_to_addTransactionFragment"
             app:destination="@id/addTransactionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editCategoryFragment"
+        android:name="com.example.financefox.fragments.EditCategoryFragment"
+        android:label="Edit Category"
+        tools:layout="@layout/fragment_edit_category" >
+        <action
+            android:id="@+id/action_editCategoryFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
     </fragment>
 </navigation>

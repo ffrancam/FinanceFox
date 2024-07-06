@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.financefox.databinding.ItemCategoryBinding
+import androidx.navigation.Navigation
 
 
 class CategoryAdapter(var mContext: Context, var categoryList: List<Category>, val categoryViewModel: CategoryViewModel, val transactionViewModel: TransactionViewModel) : RecyclerView.Adapter<CategoryAdapter.CategoryHolder>() {
@@ -37,17 +38,6 @@ class CategoryAdapter(var mContext: Context, var categoryList: List<Category>, v
             notifyDataSetChanged()
         }
 
-        /*
-        // Set onClickListener for delete button
-        view.deleteTransaction.setOnClickListener {
-            transactionViewModel.deleteTransaction(transaction)
-            // Remove item from RecyclerView
-
-            transactionList = transactionList.toMutableList().apply {
-                removeAt(position)
-            }
-            notifyDataSetChanged()
-        }*/
     }
 
 }

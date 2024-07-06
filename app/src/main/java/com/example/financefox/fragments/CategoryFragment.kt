@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.financefox.Category
 import com.example.financefox.CategoryAdapter
@@ -45,10 +46,16 @@ class CategoryFragment : Fragment() {
                 Toast.makeText(requireContext(), "Category Already Exits", Toast.LENGTH_SHORT).show()
             }
             else {
-                viewModel.addCategory(Category(name))
+                viewModel.addCategory(name)
                 binding.categoryName.setText("")
                 Toast.makeText(requireContext(), "Category Successfully Added", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        binding.editCategoriesBtn.setOnClickListener {
+            // Get the NavController
+            val navController = Navigation.findNavController(view)
+            navController.navigate(R.id.action_categoryFragment_to_editCategoryFragment)
         }
 
         // RV

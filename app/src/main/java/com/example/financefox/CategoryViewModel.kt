@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-data class Category(val name: String = "") {
+data class Category(var id:String = "", var name: String = "") {
     override fun toString(): String {
         return "Name:$name"
     }
@@ -47,12 +47,17 @@ class CategoryViewModel: ViewModel() {
             }
     }
 
-    fun addCategory(category: Category) {
-        val name = category.name
+    fun addCategory(categoryName: String) {
+        val category = Category("", categoryName)
+        val categoryId = db.collection("users")
+            .document(firebaseAuth.currentUser!!.uid)
+            .collection("categories").document().id
+
+        category.id = categoryId
 
         db.collection("users").document(firebaseAuth.currentUser!!.uid)
             .collection("categories")
-            .document(name)
+            .document(categoryId)
             .set(category)
             .addOnSuccessListener {
                 val categoriesList = _categories.value ?: mutableListOf()
@@ -89,7 +94,7 @@ class CategoryViewModel: ViewModel() {
     fun deleteCategory(category: Category) {
         db.collection("users").document(firebaseAuth.currentUser!!.uid)
             .collection("categories")
-            .document(category.name) // Assicurati che category.name sia l'ID del documento nel Firestore
+            .document(category.id)
             .delete()
             .addOnSuccessListener {
                 val currentCategories = _categories.value ?: mutableListOf()
@@ -100,7 +105,27 @@ class CategoryViewModel: ViewModel() {
             }
             .addOnFailureListener { exception ->
                 Log.d("FinanceFox", "Failed to delete category: $exception")
-                // Handle failure as needed
+            }
+    }
+
+    fun updateCategory(category: Category?, newCategoryName: String) {
+        val categoryRef = db.collection("users")
+            .document(firebaseAuth.currentUser!!.uid)
+            .collection("categories")
+            .document(category!!.id)
+        categoryRef
+            .update("name", newCategoryName)
+            .addOnSuccessListener {
+                val currentCategories = _categories.value?.toMutableList() ?: mutableListOf()
+                val index = currentCategories.indexOfFirst { it.id == category.id }
+                if (index != -1) {
+                    currentCategories[index].name = newCategoryName
+                    _categories.postValue(currentCategories)
+                }
+                Log.d("CategoryViewModel", "Category name updated to null in Firestore")
+            }
+            .addOnFailureListener { e ->
+                Log.w("CategoryViewModel", "Error updating Category name category in Firestore", e)
             }
     }
 }
