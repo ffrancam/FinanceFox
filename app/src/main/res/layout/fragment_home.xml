@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".fragments.HomeFragment">
 
+    <TextView
+        android:id="@+id/userBalance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Balance"
+        android:layout_gravity="center"/>
+
     <Button
         android:id="@+id/call_add_transaction_btn"
         android:layout_width="wrap_content"

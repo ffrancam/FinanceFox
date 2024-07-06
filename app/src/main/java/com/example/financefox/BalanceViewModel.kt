@@ -7,30 +7,78 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-data class Category(var id: String = "", var name: String = "") {
+data class Balance(var amount: Double = 0.0) {
     override fun toString(): String {
-        return "Name:$name"
+        return "Amouunt:$amount"
     }
 }
 
-class CategoryViewModel: ViewModel() {
+class BalanceViewModel: ViewModel() {
     private var firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     var userName: String
     var userID: String
 
-    private val _categories = MutableLiveData<MutableList<Category>>()
-    val categories: LiveData<MutableList<Category>>
-        get() = _categories
+    private val _balance = MutableLiveData<Balance>()
+    val balance: LiveData<Balance>
+        get() = _balance
 
     init {
-        loadCategoriesFromFirestore()
+        loadBalanceFromFirestore()
         userName = firebaseAuth.currentUser!!.displayName.toString()
         userID = firebaseAuth.currentUser!!.email.toString()
     }
 
-    fun loadCategoriesFromFirestore() {
+    fun loadBalanceFromFirestore() {
+        val balanceRef = db.collection("users").document(firebaseAuth.currentUser!!.uid).collection("balance").document("balanceDoc")
+
+        balanceRef.get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val balance = document.toObject(Balance::class.java)
+                    _balance.value = balance!!
+                } else {
+                    // Document does not exist, create it with initial value
+                    val initialBalance = Balance(0.0)
+                    balanceRef.set(initialBalance)
+                        .addOnSuccessListener {
+                            _balance.value = initialBalance
+                            Log.d("BalanceViewModel", "Balance document created with initial value.")
+                        }
+                        .addOnFailureListener { e ->
+                            Log.w("BalanceViewModel", "Error creating balance document", e)
+                        }
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.w("BalanceViewModel", "Error loading balance document", e)
+            }
+    }
+
+    fun addBalance(amountToAdd: Double) {
+        val currentBalance = _balance.value?.amount ?: 0.0
+        val newBalance = currentBalance + amountToAdd
+
+        val balanceRef = db.collection("users").document(firebaseAuth.currentUser!!.uid)
+        val balance = Balance(newBalance)
+
+        balanceRef
+            .set(balance)
+            .addOnSuccessListener {
+                _balance.value = balance
+                Log.d("BalanceViewModel", "Balance increased by $amountToAdd to $newBalance in Firestore")
+            }
+            .addOnFailureListener { e ->
+                Log.w("BalanceViewModel", "Error adding to balance in Firestore", e)
+            }
+    }
+}
+
+/*
+class CategoryViewModel: ViewModel() {
+
+fun loadCategoriesFromFirestore() {
         db.collection("users").document(firebaseAuth.currentUser!!.uid)
             .collection("categories")
             .get()
@@ -128,4 +176,4 @@ class CategoryViewModel: ViewModel() {
                 Log.w("CategoryViewModel", "Error updating Category name category in Firestore", e)
             }
     }
-}
+}*/
