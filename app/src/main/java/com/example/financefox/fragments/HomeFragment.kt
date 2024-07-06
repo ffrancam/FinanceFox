@@ -23,7 +23,6 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var auth: FirebaseAuth
 
-
     private val balanceViewModel: BalanceViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,8 +45,14 @@ class HomeFragment : Fragment() {
 
         // Get the NavController
         val navController = Navigation.findNavController(view)
-        binding.callAddTransactionBtn.setOnClickListener{
+        binding.editBalanceBtn.setOnClickListener {
+            navController.navigate(R.id.action_homeFragment_to_editBalanceFragment)
+        }
+        binding.callAddTransactionBtn.setOnClickListener {
             navController.navigate(R.id.action_homeFragment_to_addTransactionFragment)
+        }
+        binding.callTransactionBtn.setOnClickListener {
+            navController.navigate(R.id.action_homeFragment_to_transactionFragment)
         }
 
         // Observe the balance and update the userBalance TextView

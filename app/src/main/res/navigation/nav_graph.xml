@@ -13,6 +13,12 @@
         <action
             android:id="@+id/action_homeFragment_to_addTransactionFragment"
             app:destination="@id/addTransactionFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_editBalanceFragment"
+            app:destination="@id/editBalanceFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_transactionFragment"
+            app:destination="@id/transactionFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -58,5 +64,14 @@
         <action
             android:id="@+id/action_editCategoryFragment_to_categoryFragment"
             app:destination="@id/categoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editBalanceFragment"
+        android:name="com.example.financefox.fragments.EditBalanceFragment"
+        android:label="Edit Balance"
+        tools:layout="@layout/fragment_edit_balance" >
+        <action
+            android:id="@+id/action_editBalanceFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

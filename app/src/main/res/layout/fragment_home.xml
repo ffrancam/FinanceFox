@@ -6,19 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".fragments.HomeFragment">
 
-    <TextView
-        android:id="@+id/userBalance"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Balance"
-        android:layout_gravity="center"/>
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_gravity="center">
 
-    <Button
-        android:id="@+id/call_add_transaction_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="42dp"
-        android:text="Add Transaction"
-        android:layout_gravity="center" />
+        <TextView
+            android:id="@+id/userBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Balance" />
 
+        <Button
+            android:id="@+id/edit_balance_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Edit Balance" />
+
+        <Button
+            android:id="@+id/call_add_transaction_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Add Transaction" />
+
+        <Button
+            android:id="@+id/call_transaction_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="See Transactions" />
+
+    </LinearLayout>
 </FrameLayout>

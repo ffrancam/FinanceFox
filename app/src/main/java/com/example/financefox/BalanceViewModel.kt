@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 
 data class Balance(var amount: Double = 0.0) {
@@ -35,7 +36,8 @@ class BalanceViewModel: ViewModel() {
             .collection("balance")
             .document("balanceDoc")
 
-        balanceRef.get()
+        balanceRef
+            .get()
             .addOnSuccessListener { document ->
                 if (document.exists()) {
                     val balance = document.toObject(Balance::class.java)
@@ -55,6 +57,27 @@ class BalanceViewModel: ViewModel() {
             }
             .addOnFailureListener { e ->
                 Log.w("BalanceViewModel", "Error loading balance document", e)
+            }
+    }
+
+    fun getUserBalance(): Double {
+        return _balance.value?.amount ?: 0.0
+    }
+
+    fun editBalance(newBalance: Double) {
+        val balanceRef = db.collection("users")
+            .document(firebaseAuth.currentUser!!.uid)
+            .collection("balance")
+            .document("balanceDoc")
+
+        balanceRef
+            .update("amount", newBalance)
+            .addOnSuccessListener {
+                _balance.value = Balance(newBalance)
+                Log.d("BalanceViewModel", "Balance updated to $newBalance in Firestore")
+            }
+            .addOnFailureListener { e ->
+                Log.w("BalanceViewModel", "Error updating balance in Firestore", e)
             }
     }
 
@@ -99,24 +122,4 @@ class BalanceViewModel: ViewModel() {
                 Log.w("BalanceViewModel", "Error updating balance in Firestore", e)
             }
     }
-
-
-
-    /*fun addBalance(amountToAdd: Double) {
-        val currentBalance = _balance.value?.amount ?: 0.0
-        val newBalance = currentBalance + amountToAdd
-
-        val balanceRef = db.collection("users").document(firebaseAuth.currentUser!!.uid)
-        val balance = Balance(newBalance)
-
-        balanceRef
-            .set(balance)
-            .addOnSuccessListener {
-                _balance.value = balance
-                Log.d("BalanceViewModel", "Balance increased by $amountToAdd to $newBalance in Firestore")
-            }
-            .addOnFailureListener { e ->
-                Log.w("BalanceViewModel", "Error adding to balance in Firestore", e)
-            }
-    }*/
 }
