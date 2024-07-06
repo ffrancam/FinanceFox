@@ -1,6 +1,7 @@
 package com.example.financefox.fragments
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -37,8 +38,16 @@ class CategoryFragment : Fragment() {
         binding.addCategoryBtn.setOnClickListener {
             val name = binding.categoryName.text.toString()
 
-            viewModel.addCategory(Category(name))
-            binding.categoryName.setText("")
+            if (name.isEmpty()) {
+                Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show()
+            } else if (viewModel.getCategoryByName(name) != null) {
+                Toast.makeText(requireContext(), "Category Already Exits", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                viewModel.addCategory(Category(name))
+                binding.categoryName.setText("")
+                Toast.makeText(requireContext(), "Category Successfully Added", Toast.LENGTH_SHORT).show()
+            }
         }
 
         // RV

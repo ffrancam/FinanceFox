@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
+import android.widget.Toast
+import androidx.core.view.isEmpty
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.financefox.CategoryViewModel
@@ -46,7 +48,8 @@ class AddTransactionFragment : Fragment() {
         }
 
         categoryViewModel.categories.observe(viewLifecycleOwner) { categories ->
-            val categoryNames = categories.map { it.name }
+            val categoryNames = categories.map { it.name }.distinct().toMutableList()
+            categoryNames.add(0, "--")
             val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryNames)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.transactionCategory.adapter = adapter
@@ -61,31 +64,40 @@ class AddTransactionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.addTransactionBtn.setOnClickListener{
-            // Assign Category
-            val categoryName = binding.transactionCategory.selectedItem as String
-            val category = categoryViewModel.getCategoryByName(categoryName)
-            // Convert amount to double
-            val amount = binding.transactionAmount.text.toString()
-            val amountDouble = if (amount.isNotEmpty()) {
-                amount.toDouble()
-            } else {
-                0.0
-            }
-            // convert type to boolean
-            val selectedRadioButton = view.findViewById<RadioButton>(binding.transactionType.checkedRadioButtonId)
-            val type = if (selectedRadioButton.id == R.id.type_expense) {
-                true
-            } else {
-                false
-            }
-            // Assign date
-            val date = selectedDate.time
-            transactionViewModel.addTransaction(category, amountDouble, type, date)
 
-            // Get the NavController
-            val navController = Navigation.findNavController(view)
-            binding.addTransactionBtn.setOnClickListener{
-                navController.navigate(R.id.action_addTransactionFragment_to_homeFragment)
+            val categoryName = binding.transactionCategory.selectedItem as String
+            val amount = binding.transactionAmount.text.toString()
+            val selectedRadioButton =
+                view.findViewById<RadioButton>(binding.transactionType.checkedRadioButtonId)
+
+            if (categoryName.isEmpty() || amount.isEmpty() || selectedRadioButton == null){
+                Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show()
+            } else {
+                // Assign Category
+                val category = if (categoryName == "--") {
+                    null
+                } else {
+                    categoryViewModel.getCategoryByName(categoryName)
+                }
+                // Convert amount to double
+                val amountDouble = if (amount.isNotEmpty()) {
+                    amount.toDouble()
+                } else {
+                    0.0
+                }
+                // convert type to boolean
+                val type = if (selectedRadioButton.id == R.id.type_expense) {
+                    true
+                } else {
+                    false
+                }
+                // Assign date
+                val date = selectedDate.time
+                transactionViewModel.addTransaction(category, amountDouble, type, date)
+
+                // Get the NavController
+                val navController = Navigation.findNavController(view)
+                navController.navigate(R.id.action_addTransactionFragment_to_transactionFragment)
             }
         }
     }
