@@ -24,6 +24,7 @@ import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
+
 import com.google.firebase.storage.FirebaseStorage
 
 class ProfileFragment : Fragment() {
@@ -36,7 +37,6 @@ class ProfileFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         user = FirebaseAuth.getInstance().currentUser ?: throw IllegalStateException("User not logged in")
-
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

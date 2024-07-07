@@ -51,9 +51,9 @@ class HomeFragment : Fragment() {
         binding.callAddTransactionBtn.setOnClickListener {
             navController.navigate(R.id.action_homeFragment_to_addTransactionFragment)
         }
-        binding.callTransactionBtn.setOnClickListener {
+        /*binding.callTransactionBtn.setOnClickListener {
             navController.navigate(R.id.action_homeFragment_to_transactionFragment)
-        }
+        }*/
 
         // Observe the balance and update the userBalance TextView
         balanceViewModel.balance.observe(viewLifecycleOwner, Observer { balance ->

@@ -33,12 +33,5 @@
             android:layout_marginTop="16dp"
             android:text="Add Transaction" />
 
-        <Button
-            android:id="@+id/call_transaction_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="See Transactions" />
-
     </LinearLayout>
 </FrameLayout>
