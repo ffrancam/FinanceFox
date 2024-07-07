@@ -74,4 +74,25 @@
             android:id="@+id/action_editBalanceFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/statsFragment"
+        android:name="com.example.financefox.fragments.StatsFragment"
+        android:label="Statistics"
+        tools:layout="@layout/fragment_stats" >
+        <action
+            android:id="@+id/action_statsFragment_to_entryStatsFragment"
+            app:destination="@id/entryStatsFragment" />
+        <action
+            android:id="@+id/action_statsFragment_to_expenseStatsFragment"
+            app:destination="@id/expenseStatsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/entryStatsFragment"
+        android:name="com.example.financefox.fragments.EntryStatsFragment"
+        android:label="Entries Stat"
+        tools:layout="@layout/fragment_entry_stats" />
+    <fragment
+        android:id="@+id/expenseStatsFragment"
+        android:name="com.example.financefox.fragments.ExpenseStatsFragment"
+        android:label="Expense Stat" />
 </navigation>

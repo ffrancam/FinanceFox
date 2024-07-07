@@ -66,4 +66,6 @@ dependencies {
     val activity_version = "1.8.2"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     implementation("androidx.activity:activity-ktx:$activity_version")
+    // for statistics
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }

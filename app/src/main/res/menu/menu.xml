@@ -21,6 +21,12 @@
         android:title="Categories" />
 
     <item
+        android:id="@+id/statsFragment"
+        android:icon="@drawable/stat_icon"
+        android:checkable="true"
+        android:title="Statistics" />
+
+    <item
         android:id="@+id/profileFragment"
         android:icon="@drawable/profile_icon"
         android:checkable="true"
