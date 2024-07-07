@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 
         // Enqueue the WorkRequest
         val workManager = WorkManager.getInstance(this)
-            workManager.enqueue(myWorkRequest)
+        workManager.enqueue(myWorkRequest)
 
         toolbar = findViewById(R.id.myToolbar)
         setSupportActionBar(toolbar)

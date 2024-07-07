@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.play.services.cast.framework)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -57,7 +58,9 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
     // firebase
     implementation(platform("com.google.firebase:firebase-bom:33.1.1"))
-    implementation ("com.google.firebase:firebase-firestore:24.0.1'")
+    implementation("com.google.firebase:firebase-firestore:24.0.1'")
+    implementation("com.firebaseui:firebase-ui-storage:8.0.2")
+
     //for authentication
     implementation("com.firebaseui:firebase-ui-auth:7.2.0")
     //if you target Android 12

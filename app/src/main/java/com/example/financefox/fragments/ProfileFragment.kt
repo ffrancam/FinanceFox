@@ -2,6 +2,7 @@ package com.example.financefox.fragments
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Patterns
 import androidx.fragment.app.Fragment
@@ -13,14 +14,17 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import com.example.financefox.BalanceViewModel
 import com.example.financefox.R
 import com.example.financefox.databinding.FragmentProfileBinding
+import com.google.android.gms.cast.framework.media.ImagePicker
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.storage.FirebaseStorage
 
 class ProfileFragment : Fragment() {
 
@@ -32,6 +36,7 @@ class ProfileFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         user = FirebaseAuth.getInstance().currentUser ?: throw IllegalStateException("User not logged in")
+
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,6 +81,8 @@ class ProfileFragment : Fragment() {
             return
         }
 
+
+
         val credential = EmailAuthProvider.getCredential(user.email!!, pwd)
         user.reauthenticate(credential)
             .addOnCompleteListener { authTask ->
@@ -102,6 +109,7 @@ class ProfileFragment : Fragment() {
                                 if (emailTask.isSuccessful) {
                                     Toast.makeText(requireContext(), "Email Updated Successfully", Toast.LENGTH_SHORT).show()
                                     binding.profilePwd.setText("")
+
                                 } else {
                                     Toast.makeText(requireContext(), "An error occurred while updating email", Toast.LENGTH_SHORT).show()
                                 }
