@@ -120,6 +120,7 @@ class AddTransactionFragment : Fragment() {
             selectedDate.get(Calendar.MONTH),
             selectedDate.get(Calendar.DAY_OF_MONTH)
         )
+        datePicker.datePicker.maxDate = System.currentTimeMillis()
         datePicker.show()
     }
 

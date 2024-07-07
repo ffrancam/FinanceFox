@@ -51,4 +51,9 @@ class TransactionAdapter(var mContext: Context, var transactionList: List<Transa
             notifyDataSetChanged()
         }
     }
+
+    fun updateTransactions(newTransactionList: List<Transaction>) {
+        transactionList = newTransactionList
+        notifyDataSetChanged()
+    }
 }

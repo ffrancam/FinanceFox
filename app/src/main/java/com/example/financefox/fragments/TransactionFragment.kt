@@ -25,6 +25,8 @@ class TransactionFragment : Fragment() {
     private val viewModel: TransactionViewModel by activityViewModels()
     private val balanceViewModel : BalanceViewModel by activityViewModels()
 
+    private lateinit var transactionAdapter: TransactionAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -45,7 +47,7 @@ class TransactionFragment : Fragment() {
         binding.rvTransaction.layoutManager = LinearLayoutManager(requireContext())
         viewModel.transactions.observe(viewLifecycleOwner, Observer { transactions ->
             // Update the RecyclerView
-            val transactionAdapter = TransactionAdapter(requireContext(), transactions, viewModel, balanceViewModel)
+            transactionAdapter = TransactionAdapter(requireContext(), transactions, viewModel, balanceViewModel)
             binding.rvTransaction.adapter = transactionAdapter
         })
 
@@ -56,5 +58,8 @@ class TransactionFragment : Fragment() {
         }
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadTransactionsFromFirestore() // Ricarica le transazioni quando il frammento diventa visibile
+    }
 }

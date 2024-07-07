@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import java.util.Date
 
 
@@ -35,6 +36,7 @@ class TransactionViewModel: ViewModel() {
     fun loadTransactionsFromFirestore() {
         db.collection("users").document(firebaseAuth.currentUser!!.uid)
             .collection("transactions")
+            .orderBy("date", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { documents ->
                 val transactionList = mutableListOf<Transaction>()
@@ -42,6 +44,7 @@ class TransactionViewModel: ViewModel() {
                     val transaction = document.toObject(Transaction::class.java)
                     transactionList.add(transaction)
                 }
+                transactionList.sortByDescending { it.date }
                 _transactions.value = transactionList
             }
             .addOnFailureListener { exception ->
