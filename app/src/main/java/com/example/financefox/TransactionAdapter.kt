@@ -29,7 +29,7 @@ class TransactionAdapter(var mContext: Context, var transactionList: List<Transa
     override fun onBindViewHolder(holder: TransactionHolder, position: Int) {
         val transaction = transactionList.get(position)
         val view = holder.view
-        view.amountItem.text = transaction.amount.toString()
+        view.amountItem.text = transaction.amount.toString() + " €"
         view.categoryItem.text = transaction.category
         view.typeItem.text = if (transaction.type) {
             "Expense"

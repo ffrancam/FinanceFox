@@ -37,13 +37,13 @@ class StatsFragment : Fragment() {
         transactionViewModel.transactions.observe(viewLifecycleOwner) { transactions ->
             transactions.filter { it.type }.forEach { transaction ->
                 totalExpenses = totalExpenses + transaction.amount
-                binding.totalExpense.setText(totalExpenses.toString())
+                binding.totalExpense.setText(totalExpenses.toString()+" €")
             }
         }
         transactionViewModel.transactions.observe(viewLifecycleOwner) { transactions ->
             transactions.filter { !it.type }.forEach { transaction ->
                 totalEntries = totalEntries + transaction.amount
-                binding.totalEntry.setText(totalEntries.toString())
+                binding.totalEntry.setText(totalEntries.toString()+" €")
             }
         }
 
