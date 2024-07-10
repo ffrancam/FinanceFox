@@ -34,7 +34,7 @@ class TransactionAdapter(var mContext: Context, var transactionList: List<Transa
         view.typeItem.text = if (transaction.type) {
             "Expense"
         } else {
-            "Entry"
+            "Income"
         }
         // Format the date
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())

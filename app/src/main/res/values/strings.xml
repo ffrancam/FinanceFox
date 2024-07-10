@@ -7,4 +7,12 @@
     <string name="profile_email">Email</string>
     <string name="profile_pwd">Password</string>
     <string name="profile_btn">Edit Profile</string>
+
+    <!-- add transaction -->
+    <string name="add_transaction_amount">Amount</string>
+    <string name="add_transaction_1">Expense</string>
+    <string name="add_transaction_0">Income</string>
+    <string name="add_transaction_date">Select Date</string>
+    <string name="add_transaction_btn">Add</string>
+
 </resources>

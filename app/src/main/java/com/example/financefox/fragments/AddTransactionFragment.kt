@@ -51,7 +51,7 @@ class AddTransactionFragment : Fragment() {
 
         categoryViewModel.categories.observe(viewLifecycleOwner) { categories ->
             val categoryNames = categories.map { it.name }.distinct().toMutableList()
-            categoryNames.add(0, "--")
+            categoryNames.add(0, "none")
             val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryNames)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.transactionCategory.adapter = adapter
@@ -75,10 +75,6 @@ class AddTransactionFragment : Fragment() {
             if (categoryName.isEmpty() || amount.isEmpty() || selectedRadioButton == null){
                 Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show()
             } else {
-                // Assign Category
-                if (categoryName == "--") {
-                    categoryName = "none"
-                }
                 // Convert amount to double
                 val amountDouble = if (amount.isNotEmpty()) {
                     amount.toDouble()
