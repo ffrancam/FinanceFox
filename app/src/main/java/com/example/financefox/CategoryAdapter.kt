@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.financefox.databinding.ItemCategoryBinding
-import androidx.navigation.Navigation
 
 
 class CategoryAdapter(var mContext: Context, var categoryList: List<Category>, val categoryViewModel: CategoryViewModel, val transactionViewModel: TransactionViewModel) : RecyclerView.Adapter<CategoryAdapter.CategoryHolder>() {

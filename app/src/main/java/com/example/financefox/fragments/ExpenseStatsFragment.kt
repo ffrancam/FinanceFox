@@ -1,27 +1,20 @@
 package com.example.financefox.fragments
 
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import com.example.financefox.R
 import com.example.financefox.TransactionViewModel
-import com.example.financefox.databinding.FragmentAddTransactionBinding
 import com.example.financefox.databinding.FragmentExpenseStatsBinding
-import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
-import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
-import kotlin.random.Random
 
 class ExpenseStatsFragment : Fragment() {
     private lateinit var binding: FragmentExpenseStatsBinding
@@ -40,17 +33,12 @@ class ExpenseStatsFragment : Fragment() {
 
         // Observe changes in transactions LiveData
         transactionViewModel.transactions.observe(viewLifecycleOwner) { transactions ->
-            // Sum transaction amounts per category for type = true (spesa)
+            // Sum transaction amounts per category for type = true
             val categorySumMap = mutableMapOf<String, Double>()
             transactions.filter { it.type }.forEach { transaction ->
                 val category = transaction.category.takeIf { it.isNotBlank() } ?: "none"
                 val currentSum = categorySumMap.getOrDefault(category, 0.0)
                 categorySumMap[category] = currentSum + transaction.amount
-            }
-
-            // Log per verificare le categorie e il totale degli importi
-            for ((category, totalAmount) in categorySumMap) {
-                Log.d("StatsFragment", "Category: $category, Total Amount: $totalAmount")
             }
 
             // Prepare data for BarChart
@@ -65,21 +53,21 @@ class ExpenseStatsFragment : Fragment() {
 
             // Set chart properties
             val barData = BarData(dataSet)
-            barData.barWidth = 0.9f // Set the bar width
+            barData.barWidth = 0.9f
 
             // Set data to chart
             binding.expenseBarChart.apply {
                 data = barData
                 setFitBars(true)
-                invalidate() // refresh chart
+                invalidate()
 
-                // Format x-axis to show category names
+                // Format x-axis
                 xAxis.valueFormatter = IndexAxisValueFormatter(categorySumMap.keys.toList())
                 xAxis.granularity = 1f
                 xAxis.setDrawGridLines(false)
                 xAxis.textSize = 14f
 
-                // Format y-axis to show only integers
+                // Format y-axis
                 axisLeft.valueFormatter = object : ValueFormatter() {
                     override fun getFormattedValue(value: Float, axis: AxisBase?): String {
                         return value.toInt().toString()
@@ -96,7 +84,7 @@ class ExpenseStatsFragment : Fragment() {
                 }
                 axisRight.granularity = 1f
                 axisRight.setDrawGridLines(false)
-                axisRight.textSize = 14f // Set the text size of the y-axis labels
+                axisRight.textSize = 14f
             }
         }
     }

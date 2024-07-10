@@ -9,24 +9,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.Toast
-import androidx.core.view.isEmpty
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.financefox.CategoryViewModel
-import com.example.financefox.Transaction
 import com.example.financefox.TransactionViewModel
 import com.example.financefox.BalanceViewModel
 import com.example.financefox.R
 import com.example.financefox.databinding.FragmentAddTransactionBinding
-import com.example.financefox.databinding.FragmentCategoryBinding
-import com.google.firebase.auth.FirebaseAuth
-import java.time.LocalDate
 import java.text.SimpleDateFormat
 import java.util.*
 
 class AddTransactionFragment : Fragment() {
 
-    //binding connected to the specific layout of the fragment
+    // Binding connected to the specific layout of the fragment
     private lateinit var binding: FragmentAddTransactionBinding
     private lateinit var selectedDate: Calendar
 
@@ -72,17 +67,17 @@ class AddTransactionFragment : Fragment() {
             val selectedRadioButton =
                 view.findViewById<RadioButton>(binding.transactionType.checkedRadioButtonId)
 
-            if (categoryName.isEmpty() || amount.isEmpty() || selectedRadioButton == null){
+            if(categoryName.isEmpty() || amount.isEmpty() || selectedRadioButton == null){
                 Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show()
             } else {
                 // Convert amount to double
-                val amountDouble = if (amount.isNotEmpty()) {
+                val amountDouble = if(amount.isNotEmpty()) {
                     amount.toDouble()
                 } else {
                     0.0
                 }
-                // convert type to boolean
-                val type = if (selectedRadioButton.id == R.id.type_expense) {
+                // Convert type to boolean
+                val type = if(selectedRadioButton.id == R.id.type_expense) {
                     true
                 } else {
                     false

@@ -1,11 +1,9 @@
 package com.example.financefox
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 
 data class Balance(var amount: Double = 0.0) {
@@ -48,15 +46,8 @@ class BalanceViewModel: ViewModel() {
                     balanceRef.set(initialBalance)
                         .addOnSuccessListener {
                             _balance.value = initialBalance
-                            Log.d("BalanceViewModel", "Balance document created with initial value.")
-                        }
-                        .addOnFailureListener { e ->
-                            Log.w("BalanceViewModel", "Error creating balance document", e)
                         }
                 }
-            }
-            .addOnFailureListener { e ->
-                Log.w("BalanceViewModel", "Error loading balance document", e)
             }
     }
 
@@ -74,10 +65,6 @@ class BalanceViewModel: ViewModel() {
             .update("amount", newBalance)
             .addOnSuccessListener {
                 _balance.value = Balance(newBalance)
-                Log.d("BalanceViewModel", "Balance updated to $newBalance in Firestore")
-            }
-            .addOnFailureListener { e ->
-                Log.w("BalanceViewModel", "Error updating balance in Firestore", e)
             }
     }
 
@@ -116,10 +103,6 @@ class BalanceViewModel: ViewModel() {
             .update("amount", newBalance)
             .addOnSuccessListener {
                 _balance.value = Balance(newBalance)
-                Log.d("BalanceViewModel", "Balance updated to $newBalance in Firestore")
-            }
-            .addOnFailureListener { e ->
-                Log.w("BalanceViewModel", "Error updating balance in Firestore", e)
             }
     }
 }

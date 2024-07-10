@@ -1,6 +1,5 @@
 package com.example.financefox
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -47,9 +46,6 @@ class TransactionViewModel: ViewModel() {
                 transactionList.sortByDescending { it.date }
                 _transactions.value = transactionList
             }
-            .addOnFailureListener { exception ->
-                Log.d("FinanceFox", "Collection empty or not available: $exception")
-            }
     }
 
     fun addTransaction(category: String, amount: Double, type: Boolean, date: Date) {
@@ -69,7 +65,6 @@ class TransactionViewModel: ViewModel() {
                 val currentTransactions = _transactions.value.orEmpty().toMutableList()
                 currentTransactions.add(transaction)
                 _transactions.value = currentTransactions
-                Log.d("FinanceFox", "Transaction Added")
             }
     }
 
@@ -83,11 +78,6 @@ class TransactionViewModel: ViewModel() {
                 val currentTransactions = _transactions.value ?: mutableListOf()
                 currentTransactions.remove(transaction)
                 _transactions.postValue(currentTransactions)
-                Log.d("FinanceFox", "Transaction successfully deleted: ${transaction.id}")
-            }
-            .addOnFailureListener { exception ->
-                Log.d("FinanceFox", "Failed to delete transaction: $exception")
-                // Handle failure as needed
             }
     }
 
@@ -104,12 +94,6 @@ class TransactionViewModel: ViewModel() {
 
                 transactionRef
                     .update("category", "none")
-                    .addOnSuccessListener {
-                        Log.d("CategoryViewModel", "Transaction category updated to null in Firestore")
-                    }
-                    .addOnFailureListener { e ->
-                        Log.w("CategoryViewModel", "Error updating transaction category in Firestore", e)
-                    }
             }
         }
         _transactions.postValue(currentTransactions)
@@ -128,12 +112,6 @@ class TransactionViewModel: ViewModel() {
 
                 transactionRef
                     .update("category", newName)
-                    .addOnSuccessListener {
-                        Log.d("CategoryViewModel", "Transaction category updated to null in Firestore")
-                    }
-                    .addOnFailureListener { e ->
-                        Log.w("CategoryViewModel", "Error updating transaction category in Firestore", e)
-                    }
             }
         }
         _transactions.postValue(currentTransactions)

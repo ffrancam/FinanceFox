@@ -5,12 +5,8 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
-import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.content.getSystemService
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 
@@ -28,8 +24,7 @@ class MyWorker(appContext: Context, workerParams: WorkerParameters) : Worker(app
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val mChannel = NotificationChannel(CHANNEL_ID, name, importance)
             mChannel.description = descriptionText
-            // Register the channel with the system. You can't change the importance
-            // or other notification behaviors after this.
+            // Register the channel with the system.
             val notificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(mChannel)
         }
@@ -50,13 +45,5 @@ class MyWorker(appContext: Context, workerParams: WorkerParameters) : Worker(app
         }
 
         return Result.success()
-    }
-
-    private fun performBackgroundTask() {
-        // Simulated background work
-        for (i in 1..10) {
-            Log.d("MyWorker", "Performing background task: $i")
-            Thread.sleep(1000) // Simulating work by sleeping for 1 second
-        }
     }
 }

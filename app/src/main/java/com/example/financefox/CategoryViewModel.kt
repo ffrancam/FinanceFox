@@ -1,6 +1,5 @@
 package com.example.financefox
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -42,9 +41,6 @@ class CategoryViewModel: ViewModel() {
                 }
                 _categories.value = categoryList
             }
-            .addOnFailureListener { exception ->
-                Log.d("FinanceFox", "Collection empty or not available: $exception")
-            }
     }
 
     fun addCategory(categoryName: String) {
@@ -63,32 +59,17 @@ class CategoryViewModel: ViewModel() {
                 val categoriesList = _categories.value ?: mutableListOf()
                 // Check if the category already exists
                 val existingCategory = categoriesList.find{ it.name == category.name }
-                if (existingCategory != null) {
-                    Log.d("FinanceFox", "Category Already Exist")
-                } else {
+                if (existingCategory == null) {
                     val currentCategories = _categories.value.orEmpty().toMutableList()
                     currentCategories.add(category)
                     _categories.value = currentCategories
-                    Log.d("FinanceFox", "Category Added")
                 }
             }
-    }
-
-    fun getCategory(index: Int): Category? {
-        return _categories.value?.get(index)
     }
 
     fun getCategoryByName(categoryName: String): Category? {
         val categoriesList = _categories.value ?:  throw NoSuchElementException("Category not found")
         return categoriesList.find { it.name == categoryName }
-    }
-
-    fun getCategoryList(): List<String> {
-        val result = mutableListOf<String>()
-        _categories.value?.forEach{
-            result += it.name
-        }
-        return result.toList()
     }
 
     fun deleteCategory(category: Category) {
@@ -100,11 +81,6 @@ class CategoryViewModel: ViewModel() {
                 val currentCategories = _categories.value ?: mutableListOf()
                 currentCategories.remove(category)
                 _categories.postValue(currentCategories)
-                Log.d("FinanceFox", "Category successfully deleted: ${category.name}")
-                //_categories.value = updatedCategories
-            }
-            .addOnFailureListener { exception ->
-                Log.d("FinanceFox", "Failed to delete category: $exception")
             }
     }
 
@@ -122,10 +98,6 @@ class CategoryViewModel: ViewModel() {
                     currentCategories[index].name = newCategoryName
                     _categories.postValue(currentCategories)
                 }
-                Log.d("CategoryViewModel", "Category name updated to null in Firestore")
-            }
-            .addOnFailureListener { e ->
-                Log.w("CategoryViewModel", "Error updating Category name category in Firestore", e)
             }
     }
 }

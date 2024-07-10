@@ -6,21 +6,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toolbar
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.financefox.BalanceViewModel
 import com.example.financefox.R
 import com.example.financefox.TransactionAdapter
 import com.example.financefox.TransactionViewModel
-import com.example.financefox.databinding.FragmentCategoryBinding
 import com.example.financefox.databinding.FragmentTransactionBinding
 
 class TransactionFragment : Fragment() {
 
-    //binding connected to the specific layout of the fragment
+    // Binding connected to the specific layout of the fragment
     private lateinit var binding: FragmentTransactionBinding
 
     // Use of viewModel among fragments to share data
@@ -62,6 +59,6 @@ class TransactionFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.loadTransactionsFromFirestore() // Ricarica le transazioni quando il frammento diventa visibile
+        viewModel.loadTransactionsFromFirestore()
     }
 }

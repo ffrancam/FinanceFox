@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class EditBalanceFragment : Fragment() {
 
-    //binding connected to the specific layout of the fragment
+    // Binding connected to the specific layout of the fragment
     private lateinit var binding: FragmentEditBalanceBinding
     private lateinit var auth: FirebaseAuth
 

@@ -9,16 +9,14 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
-import com.example.financefox.Category
 import com.example.financefox.CategoryViewModel
 import com.example.financefox.R
 import com.example.financefox.TransactionViewModel
-import com.example.financefox.databinding.FragmentAddTransactionBinding
 import com.example.financefox.databinding.FragmentEditCategoryBinding
 
 class EditCategoryFragment : Fragment() {
 
-    //binding connected to the specific layout of the fragment
+    // Binding connected to the specific layout of the fragment
     private lateinit var binding: FragmentEditCategoryBinding
 
     // Use of viewModel among fragments to share data

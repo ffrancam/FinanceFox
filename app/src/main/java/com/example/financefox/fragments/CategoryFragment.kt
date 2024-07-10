@@ -10,7 +10,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.financefox.Category
 import com.example.financefox.CategoryAdapter
 import com.example.financefox.CategoryViewModel
 import com.example.financefox.R
@@ -19,7 +18,7 @@ import com.example.financefox.databinding.FragmentCategoryBinding
 
 class CategoryFragment : Fragment() {
 
-    //binding connected to the specific layout of the fragment
+    // Binding connected to the specific layout of the fragment
     private lateinit var binding: FragmentCategoryBinding
 
     // Use of viewModel among fragments to share data
