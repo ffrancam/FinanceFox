@@ -15,4 +15,11 @@
     <string name="add_transaction_date">Select Date</string>
     <string name="add_transaction_btn">Add</string>
 
+    <!-- edit category -->
+    <string name="edit_category_hint">New Category Name</string>
+    <string name="edit_category_btn">Update</string>
+
+    <!-- edit balance -->
+    <string name="edit_balance_hint">Balance</string>
+    <string name="edit_balance_btn">Update</string>
 </resources>
