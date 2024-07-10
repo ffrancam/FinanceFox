@@ -22,4 +22,9 @@
     <!-- edit balance -->
     <string name="edit_balance_hint">Balance</string>
     <string name="edit_balance_btn">Update</string>
+
+    <!-- home -->
+    <string name="home_balance">Your Balance:</string>
+    <string name="home_balance_btn">Edit Balance</string>
+    <string name="home_transaction_btn">Add Transaction</string>
 </resources>

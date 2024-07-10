@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
@@ -57,7 +58,14 @@ class HomeFragment : Fragment() {
 
         // Observe the balance and update the userBalance TextView
         balanceViewModel.balance.observe(viewLifecycleOwner, Observer { balance ->
-            binding.userBalance.text = balance.amount.toString()
+            binding.userBalance.text = balance.amount.toString() + " €"
+
+            if (balance.amount < 0) {
+                binding.userBalance.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+            }
+            else {
+                binding.userBalance.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+            }
         })
 
         // Load the balance from Firestore
