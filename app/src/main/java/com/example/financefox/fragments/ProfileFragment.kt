@@ -70,11 +70,6 @@ class ProfileFragment : Fragment() {
             Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_SHORT).show()
             return
         }
-        // Check if name is valid
-        if (newName.split(" ").size < 2) {
-            Toast.makeText(requireContext(), "Please enter a valid full name", Toast.LENGTH_SHORT).show()
-            return
-        }
         // Check is email is valid
         if (!isValidEmail(newEmail)) {
             Toast.makeText(requireContext(), "Please enter a valid email address", Toast.LENGTH_SHORT).show()

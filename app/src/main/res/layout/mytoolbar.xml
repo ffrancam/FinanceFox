@@ -6,6 +6,7 @@
     android:id="@+id/myToolbar"
     android:background="@color/orange"
     android:elevation="8dp"
-    android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+    android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+    style="@style/Base.Theme.FinanceFox">
 
 </androidx.appcompat.widget.Toolbar>
