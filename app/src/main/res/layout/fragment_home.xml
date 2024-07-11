@@ -53,7 +53,7 @@
                     android:textSize="40sp" />
 
                 <LinearLayout
-                    android:layout_marginTop="370dp"
+                    android:layout_marginTop="350dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
