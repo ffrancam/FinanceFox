@@ -15,9 +15,23 @@
     <string name="add_transaction_date">Select Date</string>
     <string name="add_transaction_btn">Add</string>
 
+    <!-- category -->
+    <string name="category_name">Category Name</string>
+    <string name="add_category_btn">Add Category</string>
+    <string name="edit_category_btn">Edit Categories</string>
+
     <!-- edit category -->
     <string name="edit_category_hint">New Category Name</string>
-    <string name="edit_category_btn">Update</string>
+    <string name="update_category_btn">Update</string>
+
+    <!-- items -->
+    <string name="delete_item">Delete</string>
+
+    <!-- item transaction -->
+    <string name="df_transaction_category">Category: null</string>
+    <string name="df_transaction_type">Type: null</string>
+    <string name="df_transaction_date">Date: --/--/----</string>
+    <string name="df_transaction_amount">Amount</string>
 
     <!-- edit balance -->
     <string name="edit_balance_hint">Balance</string>
@@ -27,4 +41,16 @@
     <string name="home_balance">Your Balance:</string>
     <string name="home_balance_btn">Edit Balance</string>
     <string name="home_transaction_btn">Add Transaction</string>
+
+    <!-- logout -->
+    <string name="logout_text">You are currently logging out...</string>
+
+    <!-- stats -->
+    <string name="t_expenses">Total Expenses:   </string>
+    <string name="t_entries">Total Entries:   </string>
+    <string name="n_expenses">Number of Expenses:   </string>
+    <string name="n_entries">Number of Entries:   </string>
+    <string name="default_value">-</string>
+    <string name="entries_btn">Entries</string>
+    <string name="expenses_btn">Expenses</string>
 </resources>

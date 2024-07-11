@@ -37,7 +37,7 @@ class MyWorker(appContext: Context, workerParams: WorkerParameters) : Worker(app
         val builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
             .setSmallIcon(R.drawable.logo)
             .setContentTitle("Have you registered your activity yet?")
-            .setContentText("NWe miss you, visit us")
+            .setContentText("We miss you, visit us")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
 
         with(NotificationManagerCompat.from(applicationContext)) {

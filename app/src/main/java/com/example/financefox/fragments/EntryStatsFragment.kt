@@ -33,10 +33,10 @@ class EntryStatsFragment : Fragment() {
 
         // Observe changes in transactions LiveData
         transactionViewModel.transactions.observe(viewLifecycleOwner) { transactions ->
-            // Sum transaction amounts per category for type = false
+            // Sum transaction amounts per category for type = false (entry)
             val categorySumMap = mutableMapOf<String, Double>()
             transactions.filter { !it.type }.forEach { transaction ->
-                val category = transaction.category.takeIf { it.isNotBlank() } ?: "none"
+                val category = transaction.category
                 val currentSum = categorySumMap.getOrDefault(category, 0.0)
                 categorySumMap[category] = currentSum + transaction.amount
             }
@@ -47,7 +47,7 @@ class EntryStatsFragment : Fragment() {
             }
 
             // Create BarDataSet with entries and random colors
-            val dataSet = BarDataSet(entries, "Total Amount per Category (Spesa)").apply {
+            val dataSet = BarDataSet(entries, "Total Amount per Category").apply {
                 colors = List(entries.size) { ColorTemplate.COLORFUL_COLORS.random() }
             }
 

@@ -40,7 +40,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total Expenses:   "
+                        android:text="@string/t_expenses"
                         android:textStyle="bold"
                         android:textSize="20sp"/>
 
@@ -48,7 +48,7 @@
                         android:id="@+id/totalExpense"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="-"
+                        android:text="@string/default_value"
                         android:textSize="20sp"/>
                 </LinearLayout>
 
@@ -61,7 +61,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total Entries:   "
+                        android:text="@string/t_entries"
                         android:textStyle="bold"
                         android:textSize="20sp"/>
 
@@ -69,7 +69,7 @@
                         android:id="@+id/totalEntry"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="-"
+                        android:text="@string/default_value"
                         android:textSize="20sp"/>
                 </LinearLayout>
 
@@ -83,7 +83,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Number of Expenses:   "
+                        android:text="@string/n_expenses"
                         android:textStyle="bold"
                         android:textSize="20sp"/>
 
@@ -91,7 +91,7 @@
                         android:id="@+id/n_expense"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="-"
+                        android:text="@string/default_value"
                         android:textSize="20sp"/>
                 </LinearLayout>
 
@@ -104,7 +104,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Number of Entries:   "
+                        android:text="@string/n_entries"
                         android:textStyle="bold"
                         android:textSize="20sp"/>
 
@@ -112,7 +112,7 @@
                         android:id="@+id/n_entry"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="-"
+                        android:text="@string/default_value"
                         android:textSize="20sp"/>
                 </LinearLayout>
 
@@ -127,13 +127,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
-                    android:text="Entries" />
+                    android:text="@string/entries_btn" />
 
                 <Button
                     android:id="@+id/expense_stat_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Expenses" />
+                    android:text="@string/expenses_btn" />
             </LinearLayout>
 
             </LinearLayout>

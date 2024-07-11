@@ -36,19 +36,19 @@ class ExpenseStatsFragment : Fragment() {
             // Sum transaction amounts per category for type = true
             val categorySumMap = mutableMapOf<String, Double>()
             transactions.filter { it.type }.forEach { transaction ->
-                val category = transaction.category.takeIf { it.isNotBlank() } ?: "none"
+                val category = transaction.category
                 val currentSum = categorySumMap.getOrDefault(category, 0.0)
                 categorySumMap[category] = currentSum + transaction.amount
             }
 
             // Prepare data for BarChart
-            val entries = categorySumMap.keys.mapIndexed { index, category ->
+            val expenses = categorySumMap.keys.mapIndexed { index, category ->
                 BarEntry(index.toFloat(), categorySumMap[category]!!.toFloat())
             }
 
             // Create BarDataSet with entries and random colors
-            val dataSet = BarDataSet(entries, "Total Amount per Category (Spesa)").apply {
-                colors = List(entries.size) { ColorTemplate.COLORFUL_COLORS.random() }
+            val dataSet = BarDataSet(expenses, "Total Amount per Category").apply {
+                colors = List(expenses.size) { ColorTemplate.COLORFUL_COLORS.random() }
             }
 
             // Set chart properties

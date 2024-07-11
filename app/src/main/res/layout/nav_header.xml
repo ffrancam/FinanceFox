@@ -20,9 +20,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="FinanceFox"
+        android:text="@string/app_name"
         android:fontFamily="sans-serif-medium"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:textStyle="bold"
         android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/logo"/>
